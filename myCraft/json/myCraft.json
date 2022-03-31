@@ -979,16 +979,6 @@
         "date": "2022/04/22",
         "time": "18:00"
       }
-    },
-    {
-      "id": 99,
-      "name": "Leandra Hadlee",
-      "email": "lhadlee2q@msu.edu",
-      "package": 5,
-      "appointment": {
-        "date": "2022/04/20",
-        "time": "16:00"
-      }
     }
   ],
   "package": [
