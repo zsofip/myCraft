@@ -9,7 +9,8 @@
               <th>Name</th>
               <th>Email</th>
               <th>Package</th>
-              <th>Appointment</th>
+              <th>Date</th>
+              <th>Time</th>
               <th></th>
             </tr>
           </thead>
@@ -19,7 +20,8 @@
                 <td>{{booking.name}}</td>
                 <td>{{booking.email}}</td>
                 <td>{{booking.package}}</td>
-                <td>{{booking.appointment}}</td>
+                <td>{{booking.appointment.date}}</td>
+                <td>{{booking.appointment.time}}</td>
                 <td><button (click)="onDelete(booking.id)" class="btn btn-danger btn-small"> <i class="fa fa-trash"></i> delete</button></td>
             </tr>
           </tbody>
