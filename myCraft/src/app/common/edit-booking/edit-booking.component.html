@@ -1,0 +1,201 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header card-header-success">
+      <h4 class="card-title">Foglalás hozzádása hozzáadása vagy módosítása</h4>
+      <p class="card-category">A *-gal jelölt mezők kitöltése kötelező</p>
+    </div>
+    <div class="card-body">
+      <div class="row mb-3 ml-3">
+        <div *ngIf="booking" class="col-12">
+          <form #bookingForm="ngForm" (ngSubmit)="onUpdate(booking)" class="mt-3">
+            <input [(ngModel)]="booking.id" name="id" type="hidden">
+            <div class="row mb-2">
+              <h3>Személyes adatok</h3>
+            </div>
+            <div class="row">
+              <div class="form-group">
+                <input class="form-control" [(ngModel)]="booking['id']" type="hidden" name="id">
+              </div>
+              <div class="form-group col-lg-3 col-md-12 mb-2">
+                <label for="bookingName">Név *</label>
+                <input class="form-control" [(ngModel)]="booking['name']" type="text" name="name"
+                  id="bookingName" required pattern="^[a-űA-Ű \-]{3,}(\s[a-űA-Ű \-]{3,}){1,}$">
+                <div
+                  [hidden]="bookingForm.controls['name']?.valid || bookingForm.controls['name']?.pristine"
+                  class="error-message text-danger">
+                  A név legalább két szóból áll, a szavak hossza legalább 3 karakter és csak betűket tartalmazhat.
+                </div>
+              </div>
+              <div class="form-group col-lg-3 col-md-12">
+                <label for="bookingEmail">Email cím *</label>
+                <input class="form-control" [(ngModel)]="booking['email']" type="email" name="email" id="bookingEmail"
+                  required pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}(\.[a-z]{2,})*$">
+                <div [hidden]="bookingForm.controls['email']?.valid || bookingForm.controls['email']?.pristine"
+                  class="error-message text-danger">
+                  Nem érvényes email cím formátum
+                </div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <h3>Csomag adatok</h3>
+            </div>
+            <div class="row mb-3">
+              <div class="form-group col-4">
+                <label for="package" class="font-weight-bold">Csomag *</label>
+                <select class="form-control" [(ngModel)]="booking.package" type="number" min="0"
+                name="package" id="package" required>
+                  <option *ngFor="let package of packages$ | async" [value]="package.id">
+                    {{ package.packageName }} </option>
+                </select>
+                <div [hidden]="bookingForm.controls['package']?.dirty"
+                    class="error-message text-danger">
+                    Kérjük, válasszon csomagot.
+                  </div>
+              </div>
+            </div>
+
+            <div class="row mb-2 mt-3">
+              <h3>Dátum adatok</h3>
+            </div>
+            <div class="row mt-2">
+              <div class="form-group col-lg-3 col-md-6 mb-2">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                  <mat-label>Válasszon dátumot!</mat-label>
+                  <input matInput
+                       readonly
+                       required
+                      [matDatepicker]="date" (click)="date.open()"
+                      name="date" id="date"
+                      [(ngModel)]="booking.appointment.date">
+                  <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                  <mat-datepicker #date color="primary"></mat-datepicker>
+               </mat-form-field>
+               <div [hidden]="bookingForm.controls['date']?.dirty"
+                    class="error-message text-danger">
+                    Kérjük, adja meg a foglalás napját.
+                  </div>
+              </div>
+              <div class="form-group col-lg-3 col-md-6 mb-2">
+                <label for="time" class="font-weight-bold">Idősáv *</label>
+                <select class="form-control" [(ngModel)]="booking.appointment.time" type="number" min="0"
+                name="time" id="time" required>
+                <option value="14:00">14:00</option>
+                <option value="16:00">16:00</option>
+                <option value="18:00">18:00</option>
+                </select>
+                  <div [hidden]="bookingForm.controls['time']?.dirty"
+                    class="error-message text-danger">
+                    Kérjük, válasszon idősávot.
+                  </div>
+                </div>
+              </div>
+
+            <div class="button-group mt-5">
+              <button [disabled]="bookingForm.invalid" class="btn btn-success mr-3"
+              type="submit">Mentés</button>
+              <button [hidden]="booking.id === 0" class="btn btn-default mr-3"
+                (click)="onRemove(booking)" type="button">Törlés</button>
+              <button routerLink="/booking" class="btn btn-secondary" type="button">Mégsem</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="row mt-4">
+              <div class="form-group col-lg-3 col-md-6">
+                <label for="bookingAppointmentNotes">Egyéb megjegyzés *</label>
+                <div class="input-group">
+                  <input class="form-control" [(ngModel)]="booking.appointment.notes" type="text" name="notes"
+                    id="bookingAppointmentNotes" required pattern="^[a-űA-Ű0-9_\s-]{5,}$">
+                  <div [hidden]="bookingForm.controls['notes']?.valid || bookingForm.controls['notes']?.pristine"
+                    class="error-message">
+                    A megjegyzés hossza legalább 5 karakter
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+<!-- <div class="form-group">
+  <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Lastname</mat-label>
+      <input matInput name="lastName" id="lastname" [(ngModel)]="booking['name']"
+      required pattern="^[A-Z][a-z ]*$">
+  </mat-form-field>
+  <div [hidden]="bookingForm.controls['lastName'].valid" class="error-message text-danger">
+      Please use only letters.
+  </div>
+</div> -->
+
+
+
+<!-- <div class="container">
+  <mat-card>
+    <mat-card-title>Foglalások rögzítése</mat-card-title>
+  </mat-card>
+  <form [formGroup]="bookingForm" novalidate (ngSubmit)="onUpdate(booking)">
+    <mat-card class="booking-card">
+      <mat-card-header>
+        <mat-card-title>Foglalások rögzítése</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Név" formControlName="name">
+              <mat-error *ngIf="bookingForm.controls['name'].hasError('required')">
+                Kérjük, adja meg a teljes nevet.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Email" formControlName="email">
+              <mat-error *ngIf="bookingForm.controls['email'].hasError('required')">
+                Kérjük, adja meg az email-címet.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Package" formControlName="package">
+                <mat-option *ngFor="let package of packages" [value]="package.id">
+                  {{ package.packageName }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="bookingForm.controls['package'].hasError('required')">
+                Kérjük, válassza ki a csomagot.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput #postalCode maxlength="5" placeholder="Postal Code" type="number" formControlName="postalCode">
+              <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Value binding</mat-label>
+              <input matInput [matDatepicker]="picker3" [value]="date.value">
+              <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+              <mat-datepicker #picker3></mat-datepicker>
+           </mat-form-field>
+          </div>
+        </div>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div> -->
+
+
