@@ -19,11 +19,11 @@
               <div class="form-group col-lg-3 col-md-12 mb-2">
                 <label for="bookingName">Név *</label>
                 <input class="form-control" [(ngModel)]="booking['name']" type="text" name="name"
-                  id="bookingName" required pattern="^[a-űA-Ű ]{3,}$">
+                  id="bookingName" required pattern="^[a-űA-Ű \-]{3,}(\s[a-űA-Ű \-]{3,}){1,}$">
                 <div
                   [hidden]="bookingForm.controls['name']?.valid || bookingForm.controls['name']?.pristine"
-                  class="error-message">
-                  A név hossza legalább 3 karakter és csak betűket tartalmazhat
+                  class="error-message text-danger">
+                  A név legalább két szóból áll, a szavak hossza legalább 3 karakter és csak betűket tartalmazhat.
                 </div>
               </div>
               <div class="form-group col-lg-3 col-md-12">
@@ -31,7 +31,7 @@
                 <input class="form-control" [(ngModel)]="booking['email']" type="email" name="email" id="bookingEmail"
                   required pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}(\.[a-z]{2,})*$">
                 <div [hidden]="bookingForm.controls['email']?.valid || bookingForm.controls['email']?.pristine"
-                  class="error-message">
+                  class="error-message text-danger">
                   Nem érvényes email cím formátum
                 </div>
               </div>
@@ -46,13 +46,11 @@
                 name="package" id="package" required>
                   <option *ngFor="let package of packages$ | async" [value]="package.id">
                     {{ package.packageName }} </option>
-                <!-- <option value="" selected></option>
-                <option value="1">Üveg</option>
-                <option value="2">Porcelán</option>
-                <option value="3">Fa</option>
-                <option value="4">Vászon</option>
-                <option value="5">Selyem</option> -->
                 </select>
+                <div [hidden]="bookingForm.controls['package']?.dirty"
+                    class="error-message text-danger">
+                    Kérjük, válasszon csomagot.
+                  </div>
               </div>
             </div>
 
@@ -61,43 +59,32 @@
             </div>
             <div class="row mt-2">
               <div class="form-group col-lg-3 col-md-6 mb-2">
-                <!-- <label for="bookingAppointmentDate">Dátum *</label> -->
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="outline" style="width: 100%;">
                   <mat-label>Válasszon dátumot!</mat-label>
-                  <!-- <input matInput [matDatepicker]="picker" [value]="booking.appointment.date"> -->
                   <input matInput
                        readonly
                        required
-                      [matDatepicker]="disableTyping"
+                      [matDatepicker]="date" (click)="date.open()"
+                      name="date" id="date"
                       [(ngModel)]="booking.appointment.date">
-                  <mat-datepicker-toggle matSuffix [for]="disableTyping"></mat-datepicker-toggle>
-                  <mat-datepicker #disableTyping color="primary"></mat-datepicker>
+                  <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                  <mat-datepicker #date color="primary"></mat-datepicker>
                </mat-form-field>
-               <div [hidden]="bookingForm.controls['disableTyping']?.pristine"
-                    class="error-message">
+               <div [hidden]="bookingForm.controls['date']?.dirty"
+                    class="error-message text-danger">
                     Kérjük, adja meg a foglalás napját.
                   </div>
-
-               <!-- <div class="input-group">
-                  <input class="form-control" [(ngModel)]="booking.appointment.date" type="text" name="date"
-                    id="bookingAppointmentDate" required required pattern="^[\d-]{3,}$">
-                  <div [hidden]="bookingForm.controls['date']?.valid || bookingForm.controls['date']?.pristine"
-                    class="error-message">
-                    Az irányítószám hossza legalább 3 karakter és csak számokat tartalmazhet
-                  </div>
-                </div> -->
               </div>
               <div class="form-group col-lg-3 col-md-6 mb-2">
-                <label for="package" class="font-weight-bold">Idősáv *</label>
+                <label for="time" class="font-weight-bold">Idősáv *</label>
                 <select class="form-control" [(ngModel)]="booking.appointment.time" type="number" min="0"
-                name="package" id="package" required>
-                <option value="" selected></option>
+                name="time" id="time" required>
                 <option value="14:00">14:00</option>
                 <option value="16:00">16:00</option>
                 <option value="18:00">18:00</option>
                 </select>
-                  <div [hidden]="bookingForm.controls['time']?.valid || bookingForm.controls['time']?.pristine"
-                    class="error-message">
+                  <div [hidden]="bookingForm.controls['time']?.dirty"
+                    class="error-message text-danger">
                     Kérjük, válasszon idősávot.
                   </div>
                 </div>
@@ -105,9 +92,9 @@
 
             <div class="button-group mt-5">
               <button [disabled]="bookingForm.invalid" class="btn btn-success mr-3"
-                (click)="onUpdate(booking)">Mentés</button>
+              type="submit">Mentés</button>
               <button [hidden]="booking.id === 0" class="btn btn-default mr-3"
-                (click)="onRemove(booking)">Törlés</button>
+                (click)="onRemove(booking)" type="button">Törlés</button>
               <button routerLink="/booking" class="btn btn-secondary" type="button">Mégsem</button>
             </div>
           </form>

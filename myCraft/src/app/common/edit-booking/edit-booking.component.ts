@@ -21,10 +21,6 @@ export class EditBookingComponent implements OnInit {
 
   packages$: Observable<Package[]> = this.packageService.getAll();
 
-  sunFilter = (d: Date | null): boolean => {
-    const day = (d || new Date()).getDay();
-    return day !== 0;
-  };
 
   // bookingForm = this.fb.group({
   //   name: [null, Validators.required],
@@ -68,10 +64,17 @@ export class EditBookingComponent implements OnInit {
   }
 
   onUpdate(booking: Booking): void {
+    if (booking.id === 0) {
       this.bookingService.create(booking).subscribe(
         () => {
         this.router.navigate(['/', 'booking']);
      });
+    } else {
+      this.bookingService.update(booking).subscribe(
+        booking => {
+        this.router.navigate(['/', 'booking']);
+      });
+    }
   }
 
   onRemove(booking: Booking): void {
