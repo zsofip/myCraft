@@ -20,7 +20,7 @@ export class BaseService<T extends { id: number, [key: string]: any  }> {
     return this.http.get<T[]>(`${this.apiUrl}${this.entityName}`);
   }
 
-  getOne(id: number): Observable<T> {
+  getOne(id: string | number): Observable<T> {
     return this.http.get<T>(`${this.apiUrl}${this.entityName}/${id}`);
   }
 
