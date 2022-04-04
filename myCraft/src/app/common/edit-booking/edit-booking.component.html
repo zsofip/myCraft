@@ -29,12 +29,12 @@
                     <mat-form-field appearance="outline" style="width: 100%;">
                       <mat-label>Név</mat-label>
                       <input matInput [(ngModel)]="booking['name']" type="text" name="name" id="bookingName" required
-                        pattern="^[a-űA-Ű \-]{3,}(\s[a-űA-Ű \-]{3,}){1,}$">
+                        pattern="^[a-űA-Ű \-\']{3,}(\s[a-űA-Ű \-\']{3,}){1,}$">
                     </mat-form-field>
                     <div [hidden]="bookingForm.controls['name']?.valid || bookingForm.controls['name']?.pristine"
                       class="error-message text-danger">
                       <span>A név legalább két szóból áll, a szavak hossza legalább  <br>
-                        3 karakter és csak betűket és kötőjelet tartalmazhatnak.</span>
+                        3 karakter és csak betűkből, kötőjelből, aposztrófból állhat.</span>
                     </div>
 
                     <mat-form-field appearance="outline" style="width: 100%;">
