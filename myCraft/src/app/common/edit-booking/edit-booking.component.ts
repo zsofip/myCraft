@@ -21,25 +21,6 @@ export class EditBookingComponent implements OnInit {
 
   packages$: Observable<Package[]> = this.packageService.getAll();
 
-
-  // bookingForm = this.fb.group({
-  //   name: [null, Validators.required],
-  //   email: [null, Validators.required],
-  //   package: [null, Validators.required],
-  //   postalCode: [null, Validators.compose([
-  //     Validators.required, Validators.minLength(5), Validators.maxLength(5)])
-  //   ]
-  // });
-
-
-  // packages = [
-  //   {packageName: 'Üveg', id: '1'},
-  //   {packageName: 'Porcelán', id: '2'},
-  //   {packageName: 'Fa', id: '3'},
-  //   {packageName: 'Vászon', id: '4'},
-  //   {packageName: 'Selyem', id: '5'},
-  // ]
-
   constructor(
     private ar: ActivatedRoute,
     private bookingService: BookingService,
