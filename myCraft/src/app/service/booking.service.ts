@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
 import { map, Observable } from 'rxjs';
 import { Appointment } from '../model/appointment';
 import { Booking } from '../model/booking';
@@ -24,13 +23,6 @@ export class BookingService extends BaseService<Booking>{
     if (typeof booking.appointment === 'object') {
       this.bookingAppointment = new Appointment()
       this.bookingAppointment.date = booking.appointment.date
-      // this.bookingAppointment.date = JSON.stringify(booking.appointment.date, (key: any, value: any) => {
-      //   if (JSON.parse(JSON.stringify(moment(value))) === value) {
-      //     return moment(value).format("yyyy/MM/DD");
-      //   } else {
-      //     return value;
-      //   }
-      // })
       this.bookingAppointment.time = booking.appointment.time
       booking.appointment = this.bookingAppointment
     }
