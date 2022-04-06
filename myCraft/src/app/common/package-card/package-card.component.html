@@ -1,0 +1,76 @@
+<div class="container ml-2">
+  <div class="content offset-1">
+    <div fxLayout="row wrap" fxFlex="grow" fxLayoutGap="20px grid" fxLayoutAlign="center stretch">
+      <div fxFlex="30" fxFlex.sm="50" fxFlex.xs="100" *ngFor="let package of packages$ | async">
+        <mat-card class="mat-elevation-z4 h-100" style="margin-top:10px;">
+          <mat-card-header>
+            <mat-card-title>{{package.id}} - {{package.packageName}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              <button mat-mini-fab color="danger" (click)="onSubmit(package)"><i class="material-icons">save</i></button>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src="{{package.image}}">
+          <mat-card-content>
+            <!-- <p>
+              {{package.description}}
+            </p> -->
+            <!-- <p>
+              {{package.price}}
+            </p> -->
+            <mat-accordion>
+              <!-- <mat-expansion-panel hideToggle class="mat-elevation-z0">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Kép elérhetősége
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <mat-form-field appearance="standard">
+                  <mat-label>link</mat-label>
+                  <input matInput [(ngModel)]="package['image']" type="text" name="package">
+                </mat-form-field>
+
+
+              </mat-expansion-panel> -->
+
+              <mat-expansion-panel hideToggle class="mat-elevation-z0">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Csomag leírása
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <mat-form-field appearance="standard">
+                  <mat-label>leírás</mat-label>
+                  <textarea matInput [(ngModel)]="package['description']" type="text" name="description"></textarea>
+                </mat-form-field>
+              </mat-expansion-panel>
+
+
+              <mat-expansion-panel  hideToggle class="mat-elevation-z0" (opened)="panelOpenState = true"
+              (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Csomag ára
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <mat-form-field appearance="standard">
+                  <mat-label>Ár</mat-label>
+                  <input matInput [(ngModel)]="package['price']" type="text" name="price">
+                </mat-form-field>
+              </mat-expansion-panel>
+
+            </mat-accordion>
+
+
+          </mat-card-content>
+          <!-- <mat-card-actions align="end">
+
+          </mat-card-actions> -->
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
