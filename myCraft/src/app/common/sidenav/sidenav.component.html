@@ -5,9 +5,15 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menü</mat-toolbar>
     <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard"><i class="material-icons">dashboard</i>Főoldal</a>
       <a mat-list-item routerLink="/booking" routerLinkActive="active"><i class="material-icons">view_list</i>Foglalások</a>
       <a mat-list-item routerLink="/edit-booking/0"><i class="material-icons">edit_calendar</i>Új foglalás</a>
+      <a mat-list-item routerLink="/package"><i class="material-icons">inventory</i>Csomagok</a>
     </mat-nav-list>
+
+    <img id="brushes" src="../../../../assets/img/brushes_arctic.jpg" alt="brushes">
+
+
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -20,6 +26,8 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>myCraft</span>
+      <div class="container"><img id="birds" src="../../../../assets/img/birds_crop.jpg" alt="birds"></div>
+      <span>alkosd meg a saját világod...</span>
     </mat-toolbar>
     <!-- Add Content Here -->
   </mat-sidenav-content>
