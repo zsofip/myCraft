@@ -33,7 +33,12 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 
-
+import { NgChartsModule } from 'ng2-charts';
+import { DashComponent } from './common/dash/dash.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatMenuModule } from '@angular/material/menu';
+import { BaseCardComponent } from './common/base-card/base-card.component';
+import { PackageSalesChartComponent } from './common/charts/package-sales-chart/package-sales-chart.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +50,9 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
     PackageCardComponent,
     PackageComponent,
     DashboardComponent,
+    DashComponent,
+    BaseCardComponent,
+    PackageSalesChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +76,9 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
     MatDatepickerModule,
     MatExpansionModule,
     CdkAccordionModule,
+    NgChartsModule,
+    MatGridListModule,
+    MatMenuModule,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},

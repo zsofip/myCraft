@@ -2,37 +2,19 @@
   <div class="content offset-1">
     <div fxLayout="row wrap" fxFlex="grow" fxLayoutGap="20px grid" fxLayoutAlign="center stretch">
       <div fxFlex="30" fxFlex.sm="50" fxFlex.xs="100" *ngFor="let package of packages$ | async">
-        <mat-card class="mat-elevation-z4 h-100" style="margin-top:10px;">
+        <mat-card class="mat-elevation-z4 h-100" style="margin-top:10px; margin-bottom:25px;">
           <mat-card-header>
             <mat-card-title>{{package.id}} - {{package.packageName}}
             </mat-card-title>
             <mat-card-subtitle>
-              <button mat-mini-fab color="danger" (click)="onSubmit(package)"><i class="material-icons">save</i></button>
+              <button mat-mini-fab color="danger" [disabled]="price.invalid || description.invalid"
+              (click)="onSubmit(package)"><i class="material-icons">save</i></button>
             </mat-card-subtitle>
           </mat-card-header>
           <img mat-card-image src="{{package.image}}">
           <mat-card-content>
-            <!-- <p>
-              {{package.description}}
-            </p> -->
-            <!-- <p>
-              {{package.price}}
-            </p> -->
+
             <mat-accordion>
-              <!-- <mat-expansion-panel hideToggle class="mat-elevation-z0">
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    Kép elérhetősége
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-
-                <mat-form-field appearance="standard">
-                  <mat-label>link</mat-label>
-                  <input matInput [(ngModel)]="package['image']" type="text" name="package">
-                </mat-form-field>
-
-
-              </mat-expansion-panel> -->
 
               <mat-expansion-panel class="mat-elevation-z0">
                 <mat-expansion-panel-header>
@@ -43,13 +25,19 @@
 
                 <mat-form-field appearance="standard">
                   <mat-label>leírás</mat-label>
-                  <textarea matInput [(ngModel)]="package['description']" type="text" name="description"></textarea>
+                  <textarea matInput [(ngModel)]="package['description']" type="text" name="description"
+                    class="form-control" required pattern="^([a-űA-Ű0-9]{1})([a-űA-Ű0-9\s\:]{2,54})$"
+                    #description="ngModel"></textarea>
                 </mat-form-field>
+                <mat-error *ngIf="description.invalid && (description.dirty || description.touched)" class="error-message text-danger">
+                  <mat-error *ngIf="description.errors?.['required']">Adja meg a csomag leírását!</mat-error>
+                  <mat-error *ngIf="description.errors?.['pattern']">A leírás 3-55 karakter lehet.</mat-error>
+                </mat-error>
               </mat-expansion-panel>
 
 
               <mat-expansion-panel class="mat-elevation-z0" (opened)="panelOpenState = true"
-              (closed)="panelOpenState = false">
+                (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     Csomag ára
@@ -58,17 +46,21 @@
 
                 <mat-form-field appearance="standard">
                   <mat-label>Ár</mat-label>
-                  <input matInput [(ngModel)]="package['price']" type="text" name="price">
+                  <input matInput [(ngModel)]="package['price']" type="text" name="price" class="form-control" required
+                    pattern="^[1-9]{1,1}[0-9]{0,4}$" #price="ngModel">
+                  <span matSuffix>Ft</span>
                 </mat-form-field>
+                <mat-error *ngIf="price.invalid && (price.dirty || price.touched)" class="error-message text-danger">
+                  <mat-error *ngIf="price.errors?.['required']">Adja meg a csomag árát!</mat-error>
+                  <mat-error *ngIf="price.errors?.['pattern']">Az ár 1-99.999 közé eső szám lehet.</mat-error>
+                </mat-error>
               </mat-expansion-panel>
 
             </mat-accordion>
 
 
           </mat-card-content>
-          <!-- <mat-card-actions align="end">
 
-          </mat-card-actions> -->
         </mat-card>
       </div>
     </div>
