@@ -1,0 +1,19 @@
+<div class="grid-container offset-2">
+  <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="350px">
+
+    <mat-grid-tile *ngFor="let i of [1, 2]" [colspan]="( cardLayout | async )?.miniCard?.cols"
+    [rowspan]="( cardLayout | async )?.miniCard?.rows">
+      <app-base-card title="Card {{i}}" class="dashboard-card">
+        <div>Mini Card Content Here</div>
+      </app-base-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile *ngFor="let i of [3, 4]" [colspan]="( cardLayout | async )?.chart?.cols"
+    [rowspan]="( cardLayout | async )?.chart?.rows">
+      <app-base-card title="Card {{i}}" class="dashboard-card">
+        <div>Chart Content Here</div>
+      </app-base-card>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</div>
