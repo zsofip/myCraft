@@ -82,7 +82,7 @@ import { PackageSalesChartComponent } from './common/charts/package-sales-chart/
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},
-    {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {strict: true}}
+    {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {strict: false}}
   ],
   bootstrap: [AppComponent]
 })

@@ -91,7 +91,8 @@
                       <mat-label>Dátum</mat-label>
                       <input matInput required placeholder="Válasszon dátumot!"
                       [matDatepicker]="date" (click)="date.open()" name="date"
-                        id="date" [(ngModel)]="booking.appointment.date">
+                        id="date" [(ngModel)]="booking.appointment.date"
+                        (dateChange)="onDateChange($event)">
                       <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
                       <mat-datepicker #date color="primary"></mat-datepicker>
                     </mat-form-field>
@@ -123,7 +124,7 @@
             </div>
 
             <div class="button-group mt-5">
-              <button [disabled]="bookingForm.invalid" class="btn btn-primary mr-3" type="submit">Mentés</button>
+              <button [disabled]="bookingForm.invalid || isSubmitBtnDisabled" class="btn btn-primary mr-3" type="submit">Mentés</button>
               <button [hidden]="booking.id === 0" class="btn btn-danger mr-3" (click)="onRemove(booking)"
                 type="button">Törlés</button>
               <button routerLink="/booking" class="btn btn-secondary" type="button">Mégsem</button>

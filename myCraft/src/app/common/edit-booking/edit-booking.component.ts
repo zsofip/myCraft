@@ -2,9 +2,11 @@ import { PackageService } from './../../service/package.service';
 import { Package } from './../../model/package';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, Observable, map } from 'rxjs';
+import { switchMap, Observable, map, filter, toArray, count, reduce } from 'rxjs';
 import { Booking } from 'src/app/model/booking';
 import { BookingService } from 'src/app/service/booking.service';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import * as moment from 'moment';
 
 
 @Component({
@@ -43,27 +45,27 @@ export class EditBookingComponent implements OnInit {
       );
   }
 
-  overlappingAppointments(booking1: Booking, booking2: Booking): boolean {
-    if (booking1.appointment.date < booking2.appointment.date &&
-      booking1.appointment.time < booking2.appointment.time)
-      return false;
 
-    if (booking1.appointment.date > booking2.appointment.date &&
-      booking1.appointment.time > booking2.appointment.time)
-      return false;
+  isSubmitBtnDisabled: boolean= false;
 
-    return true;
-  }
+  public onDateChange(event: MatDatepickerInputEvent<Date>): void {
+    const isOverlap =
+    this.bookings$.pipe(
+    map(list => list.filter(item => item.appointment.date === moment(event.value).toJSON())));
+    const subscribe = isOverlap.subscribe((value) => {
+      console.log(value.length)
+      if (value.length > 3) {
+        this.isSubmitBtnDisabled = true;
+        alert("Az időpont betelt!");
+      } else this.isSubmitBtnDisabled = false;
+    }
+  )
+      }
 
-  isOverlap(booking: Booking): any { this.bookings$.pipe(
-    map(list => {
-      return list.forEach(item => {
-        return this.overlappingAppointments(this.booking, item)});
-      })); }
+
 
   onUpdate(booking: Booking): void {
-
-    if (booking.id === 0) {
+     if (booking.id === 0) {
             this.bookingService.create(booking).subscribe(
               () => {
                 this.router.navigate(['/', 'booking']);
@@ -74,9 +76,7 @@ export class EditBookingComponent implements OnInit {
                 this.router.navigate(['/', 'booking']);
               });
             }
-
-
-        }
+         }
 
 
 onRemove(booking: Booking): void {
@@ -88,4 +88,3 @@ onRemove(booking: Booking): void {
 }
 
 
-// alert("Az időpont foglalt!");
